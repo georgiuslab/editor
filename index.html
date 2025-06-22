@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Simple Online Editor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="title">Microsoft Office Word</div>
+        <div>Simple Online Editor</div>
+    </div>
+
+    <!-- Menu Bar -->
+    <div class="menu-bar">
+        <div>File</div>
+        <div style="font-weight: bold;">Home</div>
+        <div>Insert</div>
+        <div>Layout</div>
+        <div>Review</div>
+        <div onclick="getInfo()">View</div>
+    </div>
+
+    <div class="menu-container">
+        <img id="menu-img" src="menu.png" alt="menu-bar">
+        <input type="checkbox" id="toggle-bold" hidden>
+        <label for="toggle-bold" id="bold" onclick="execCmd('bold')">B</label>
+        <button id="center" onclick="execCmd('justifyCenter')">
+            <i class="fas fa-align-center"></i>
+        </button>
+    </div>
+
+    <!-- Ribbon -->
+    <div class="ribbon">
+        <button onclick="execCmd('bold')"><b>B</b></button>
+        <button onclick="execCmd('italic')"><i>I</i></button>
+        <button onclick="execCmd('underline')"><u>U</u></button>
+        <button onclick="execCmd('justifyLeft')">Left</button>
+        <button onclick="execCmd('justifyCenter')">Center</button>
+        <button onclick="execCmd('justifyRight')">Right</button>
+        <button onclick="execCmd('insertUnorderedList')">• List</button>
+    </div>
+
+    <!-- Editor -->
+    <div class="editor-container">
+        <div class="editor" contenteditable="true">
+            <p>Hi, this is a test message</p>
+            <p id="answer"></p>
+            <textarea id="question"></textarea>
+        </div>
+    </div>
+
+    <script>
+        function execCmd(cmd) {
+            document.execCommand(cmd, false, null);
+        }
+
+        function getInfo() {
+            const info = document.getElementById("question").value;
+            const answer = document.getElementById("answer")
+            fetch("https://ce45-2406-da1a-588-ed00-58e0-5ed8-b624-3de0.ngrok-free.app/get", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: info })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    answer.innerText = data.response
+                })
+                .catch(error => {
+                    console.error("Error sending data:", error);
+                });
+        }
+    </script>
+
+</body>
+
+</html>

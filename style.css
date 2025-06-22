@@ -1,0 +1,124 @@
+   body {
+       margin: 0;
+       font-family: "Segoe UI", sans-serif;
+       background: #f3f3f3;
+   }
+
+   /* Top Blue Bar */
+   .top-bar {
+       background: #2b579a;
+       color: white;
+       padding: 10px 20px;
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+   }
+
+   .top-bar .title {
+       font-weight: bold;
+       font-size: 18px;
+   }
+
+   /* Menu Bar */
+   .menu-bar {
+       background: #f4f4f4;
+       padding: 5px 20px;
+       display: flex;
+       gap: 25px;
+       border-bottom: 1px solid #ccc;
+   }
+
+   .menu-bar div {
+       cursor: pointer;
+       font-size: 14px;
+       padding: 4px 6px;
+   }
+
+   .menu-bar div:hover {
+       background: #dbe9f4;
+       border-radius: 4px;
+   }
+
+   /* Ribbon */
+   .ribbon {
+       background: #e5e5e5;
+       padding: 10px 20px;
+       display: flex;
+       gap: 10px;
+       border-bottom: 1px solid #ccc;
+   }
+
+   .ribbon button {
+       padding: 5px 8px;
+       font-size: 14px;
+       background: white;
+       border: 1px solid #ccc;
+       border-radius: 4px;
+       cursor: pointer;
+   }
+
+   .ribbon button:hover {
+       background: #dbe9f4;
+   }
+
+   /* Editor */
+   .editor-container {
+       padding: 20px;
+       display: flex;
+       justify-content: center;
+   }
+
+   .editor {
+       background: white;
+       width: 800px;
+       min-height: 1000px;
+       padding: 30px;
+       border: 1px solid #ccc;
+       box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+       outline: none;
+   }
+
+   #question,
+   #question:active {
+       border: none;
+       outline: none;
+       width: 100%;
+       height: 70px;
+       resize: none;
+   }
+
+   .menu-container {
+       position: relative;
+       display: inline-block;
+   }
+
+   #menu-img {
+       display: block;
+   }
+
+   #center {
+       position: absolute;
+       top: 13px;
+       right: 420px;
+       color: black;
+       font-size: 16px;
+       z-index: 10;
+       padding: 4px 7px;
+       cursor: pointer;
+   }
+
+   #bold {
+       position: absolute;
+       top: 12px;
+       right: 685px;
+       z-index: 10;
+       padding: 6px 8px;
+       cursor: pointer;
+       font-weight: bold;
+       user-select: none;
+       background-color: rgba(239,244,249,255);
+   }
+
+   #toggle-bold:checked ~ #bold {
+        background-color: rgb(133, 131, 131);
+   }
