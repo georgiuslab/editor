@@ -82,10 +82,11 @@
        padding: 20px;
        display: flex;
        justify-content: center;
+       margin-top: 60px;
+       page-break-before: always;
    }
 
    .answer {
-       margin-top: 20px;
        background: white;
        width: 800px;
        min-height: 1000px;
