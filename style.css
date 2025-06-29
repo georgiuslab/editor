@@ -78,6 +78,12 @@
        outline: none;
    }
 
+   .answer-container {
+       padding: 20px;
+       display: flex;
+       justify-content: center;
+   }
+
    .answer {
        margin-top: 20px;
        background: white;
