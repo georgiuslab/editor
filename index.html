@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Simple Online Editor</title>
+    <title>Microsoft Office Word</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
@@ -11,10 +11,11 @@
 
 <body>
 
+    <div class="header">
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="title">Microsoft Office Word</div>
-        <div>Simple Online Editor</div>
+        <div>Free Version</div>
     </div>
 
     <!-- Menu Bar -->
@@ -25,6 +26,9 @@
         <div>Layout</div>
         <div>Review</div>
         <div onclick="getInfo()">View</div>
+        <div onclick="showHelp('test.txt')">Help</div>
+        <div onclick="showHelp('sameuli.txt')">Window</div>
+        <div onclick="showHelp('bolo.txt')">About</div>
     </div>
 
     <div class="menu-container">
@@ -47,23 +51,25 @@
         <button onclick="execCmd('insertUnorderedList')">• List</button>
     </div>
 -->
+
+</div>
     <!-- Editor -->
-    <div class="editor-container">
+    <div id="firstPage" class="editor-container">
         <div class="editor" contenteditable="true">
-      <pre>
-        public class Main {
-            public static void main(String[] args) {
-                System.out.println("Hello World");
-            }
-        }
-      </pre>
-            <textarea id="question"></textarea>
+            <p>hel-t|win-three|ab-last</p>
+            <textarea id="question" placeholder="-"></textarea>
+        </div>
+    </div>
+
+    <div id="helpContainer" class="editor-container">
+        <div class="editor" contenteditable="true">
+            <pre id="help">content</pre>
         </div>
     </div>
 
     <div class="answer-container">
         <div class="answer" contenteditable="true">
-            <p>Public Class Java</p>
+            <p>Haskell</p>
             <p id="answer"></p>
         </div>
     </div>
@@ -71,6 +77,32 @@
     <script>
         function execCmd(cmd) {
             document.execCommand(cmd, false, null);
+        }
+
+        function showHelp(file) {
+            const container = document.getElementById('helpContainer')
+
+            if (container.style.display === 'flex') {
+                container.style.display = 'none';
+                return;
+            }
+
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) alert("File not found or can't be accessed.");
+                    return response.text();
+                })
+                .then(data => {
+                    const output = document.getElementById('help');
+                    output.textContent = data;
+                    container.style.display = 'flex'; // Show the div
+                })
+                .catch(error => {
+                    const output = document.getElementById('help');
+                    output.textContent = 'Error: ' + error.message;
+                    container.style.display = 'flex'; // Show the div
+                });
+
         }
 
         function getInfo() {
