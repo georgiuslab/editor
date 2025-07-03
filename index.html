@@ -2,108 +2,419 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Microsoft Office Word</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>MARS MIPS Clone</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .menu-bar {
+            background: #eaeaea;
+            padding: 4px 10px;
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid #aaa;
+            font-size: 14px;
+        }
+
+        .toolbar {
+            background: #f3f3f3;
+            padding: 5px 10px;
+            border-bottom: 1px solid #bbb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toolbar button {
+            background-color: #d6d6d6;
+            border: 1px solid #aaa;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+
+        .main {
+            display: flex;
+            height: calc(100vh - 78px);
+        }
+
+        .left-panel {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #aaa;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: #ddd;
+            font-size: 13px;
+        }
+
+        .tabs div {
+            padding: 5px 10px;
+            border: 1px solid #aaa;
+            border-bottom: none;
+            background-color: #eee;
+            cursor: pointer;
+        }
+
+        .tabs .active {
+            background-color: white;
+            font-weight: bold;
+        }
+
+        .editor {
+            background-color: white;
+            padding: 10px;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            resize: none;
+            border: none;
+            outline: none;
+            min-height: 0;
+            height: 800px;
+            /* fixed height for each textarea */
+            flex-shrink: 0;
+            /* prevent shrinking */
+            box-sizing: border-box;
+        }
+
+        .bottom-console {
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid #aaa;
+        }
+
+        .console-tabs {
+            display: flex;
+            font-size: 13px;
+            background-color: #ddd;
+        }
+
+        .console-tabs div {
+            padding: 5px 10px;
+            border: 1px solid #aaa;
+            border-bottom: none;
+            background-color: #eee;
+        }
+
+        .console-tabs .active {
+            background-color: white;
+            font-weight: bold;
+        }
+
+        .console-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .console-area {
+            flex: 1;
+            border-top: 1px solid #ccc;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            background-color: white;
+            font-size: 14px;
+            resize: none;
+            border: none;
+            outline: none;
+        }
+
+        .clear-btn {
+            width: 70px;
+            margin: 10px;
+            background-color: #eee;
+            border: 1px solid #aaa;
+            cursor: pointer;
+        }
+
+        .right-panel {
+            flex: 1;
+            background-color: white;
+            font-size: 13px;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Consolas, monospace;
+        }
+
+        th,
+        td {
+            border: 1px solid #aaa;
+            padding: 4px 6px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            /* allow flexbox to constrain height */
+            overflow-y: auto;
+            /* enable vertical scrolling */
+        }
+
+        #question {
+            color: rgb(243, 233, 233);
+        }
+
+        .menu-bar div {
+            cursor: pointer;
+        }
+
+        .menu-bar div:hover {
+            background-color: gray;
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="header">
-    <!-- Top Bar -->
-    <div class="top-bar">
-        <div class="title">Microsoft Office Word</div>
-        <div>Free Version</div>
-    </div>
-
-    <!-- Menu Bar -->
     <div class="menu-bar">
         <div>File</div>
-        <div style="font-weight: bold;">Home</div>
-        <div>Insert</div>
-        <div>Layout</div>
-        <div>Review</div>
-        <div onclick="getInfo()">View</div>
-        <div onclick="showHelp('test.txt')">Help</div>
-        <div onclick="showHelp('sameuli.txt')">Window</div>
-        <div onclick="showHelp('bolo.txt')">About</div>
+        <div>Edit</div>
+        <div>Run</div>
+        <div>Settings</div>
+        <div>Tools</div>
+        <div>Help</div>
     </div>
 
-    <div class="menu-container">
-        <img id="menu-img" src="menu.png" alt="menu-bar">
-        <input type="checkbox" id="toggle-bold" hidden>
-        <label for="toggle-bold" id="bold" onclick="execCmd('bold')">B</label>
-        <button id="center" onclick="execCmd('justifyCenter')">
-            <i class="fas fa-align-center"></i>
-        </button>
+    <div class="toolbar">
+        <button>📝</button>
+        <button>📂</button>
+        <button>💾</button>
+        <button onclick="getInfo()">▶️</button>
+        <button>⏹️</button>
+        <button>⏪</button>
+        <button>⏩</button>
+        <span style="margin-left:auto;">Run speed at max (no interaction) ▸</span>
     </div>
 
-    <!-- Ribbon 
-    <div class="ribbon">
-        <button onclick="execCmd('bold')"><b>B</b></button>
-        <button onclick="execCmd('italic')"><i>I</i></button>
-        <button onclick="execCmd('underline')"><u>U</u></button>
-        <button onclick="execCmd('justifyLeft')">Left</button>
-        <button onclick="execCmd('justifyCenter')">Center</button>
-        <button onclick="execCmd('justifyRight')">Right</button>
-        <button onclick="execCmd('insertUnorderedList')">• List</button>
-    </div>
--->
+    <div class="main">
+        <!-- Left: Code + Console -->
+        <div class="left-panel">
+            <div class="tabs">
+                <div class="active">Edit</div>
+                <div>Execute</div>
+            </div>
+            <div class="editor-container">
 
-</div>
-    <!-- Editor -->
-    <div id="firstPage" class="editor-container">
-        <div class="editor" contenteditable="true">
-            <p>hel-t|win-three|ab-last</p>
-            <textarea id="question" placeholder="-"></textarea>
+                <textarea id="normal" class="editor" placeholder="Enter your MIPS assembly code here..."
+                    spellcheck="false"></textarea>
+                <textarea id="question" class="editor" placeholder="---" spellcheck="false"></textarea>
+
+            </div>
+
+
+            <div class="bottom-console">
+                <div class="console-tabs">
+                    <div class="active">Mars Messages</div>
+                    <div>Run I/O</div>
+                </div>
+                <div class="console-content">
+                    <button class="clear-btn">Clear</button>
+                    <textarea id="answer" class="console-area" placeholder="Console output..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Registers -->
+        <div class="right-panel">
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Number</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>$zero</td>
+                    <td>0</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$at</td>
+                    <td>1</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$v0</td>
+                    <td>2</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$v1</td>
+                    <td>3</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$a0</td>
+                    <td>4</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$a1</td>
+                    <td>5</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$a2</td>
+                    <td>6</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$a3</td>
+                    <td>7</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t0</td>
+                    <td>8</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t1</td>
+                    <td>9</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t2</td>
+                    <td>10</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t3</td>
+                    <td>11</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t4</td>
+                    <td>12</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t5</td>
+                    <td>13</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t6</td>
+                    <td>14</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t7</td>
+                    <td>15</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$s0</td>
+                    <td>16</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$s1</td>
+                    <td>17</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$s2</td>
+                    <td>18</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$s3</td>
+                    <td>19</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$s4</td>
+                    <td>20</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$s5</td>
+                    <td>21</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$s6</td>
+                    <td>22</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$s7</td>
+                    <td>23</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t8</td>
+                    <td>24</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$t9</td>
+                    <td>25</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$k0</td>
+                    <td>26</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$k1</td>
+                    <td>27</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$gp</td>
+                    <td>28</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$sp</td>
+                    <td>29</td>
+                    <td>0x7fffeffc</td>
+                </tr>
+                <tr>
+                    <td>$fp</td>
+                    <td>30</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>$ra</td>
+                    <td>31</td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>hi</td>
+                    <td></td>
+                    <td>0x00000000</td>
+                </tr>
+                <tr>
+                    <td>lo</td>
+                    <td></td>
+                    <td>0x00000000</td>
+                </tr>
+            </table>
         </div>
     </div>
 
-    <div id="helpContainer" class="editor-container">
-        <div class="editor" contenteditable="true">
-            <pre id="help">content</pre>
-        </div>
-    </div>
-
-    <div class="answer-container">
-        <div class="answer" contenteditable="true">
-            <p>Haskell</p>
-            <p id="answer"></p>
-        </div>
-    </div>
 
     <script>
-        function execCmd(cmd) {
-            document.execCommand(cmd, false, null);
-        }
-
-        function showHelp(file) {
-            const container = document.getElementById('helpContainer')
-
-            if (container.style.display === 'flex') {
-                container.style.display = 'none';
-                return;
-            }
-
-            fetch(file)
-                .then(response => {
-                    if (!response.ok) alert("File not found or can't be accessed.");
-                    return response.text();
-                })
-                .then(data => {
-                    const output = document.getElementById('help');
-                    output.textContent = data;
-                    container.style.display = 'flex'; // Show the div
-                })
-                .catch(error => {
-                    const output = document.getElementById('help');
-                    output.textContent = 'Error: ' + error.message;
-                    container.style.display = 'flex'; // Show the div
-                });
-
-        }
 
         function getInfo() {
             const info = document.getElementById("question").value;
@@ -117,14 +428,22 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    answer.innerText = data.response
+                    answer.value = `Assembling program...
+Assemble operation completed successfully.
+
+-- program loaded into memory --
+
+Execution started at PC = 0x00400000
+Execution completed.
+
+${data.response}`;
                 })
                 .catch(error => {
                     console.error("Error sending data:", error);
                 });
         }
-    </script>
 
+    </script>
 </body>
 
 </html>
